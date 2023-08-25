@@ -10,23 +10,41 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import mi.xi.timer.ui.theme.MyApplicationTheme
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.rememberNavController
+import dagger.hilt.android.AndroidEntryPoint
+import mi.xi.timer.ui.screens.LoginScreen
+import mi.xi.timer.ui.screens.login.loginGraph
+import mi.xi.timer.ui.theme.TimerTheme
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            MyApplicationTheme {
-                // A surface container using the 'background' color from the theme
+            val navController = rememberNavController()
+
+            TimerTheme {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    Greeting("Android")
+                    MainNavHost(start = LoginScreen.route, navController = navController)
                 }
             }
         }
+    }
+}
+
+@Composable
+fun MainNavHost(
+    start: String,
+    navController: NavHostController
+) {
+    NavHost(navController = navController, startDestination = start) {
+        loginGraph(navController = navController)
     }
 }
 
@@ -41,7 +59,7 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
-    MyApplicationTheme {
+    TimerTheme {
         Greeting("Android")
     }
 }
