@@ -18,8 +18,8 @@ class DataManager @Inject constructor(
 ) {
     private val gsonConverter = Gson()
 
-    suspend fun getString(key: String, defaultValue: String): String =
-        get { preferences -> preferences[stringPreferencesKey(key)] ?: defaultValue }
+    suspend fun getString(key: String): String? =
+        get { preferences -> preferences[stringPreferencesKey(key)] }
 
     suspend fun setString(key: String, value: String) {
         set { preferences -> preferences[stringPreferencesKey(key)] = value }
