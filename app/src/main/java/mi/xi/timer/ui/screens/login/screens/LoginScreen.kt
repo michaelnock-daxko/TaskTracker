@@ -4,20 +4,17 @@ package mi.xi.timer.ui.screens.login.screens
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
-import mi.xi.timer.ui.theme.ColorError
-import mi.xi.timer.ui.theme.MarginMedium
+import mi.xi.timer.ui.components.ErrorText
 
 @Composable
 fun LoginScreen(
@@ -29,6 +26,7 @@ fun LoginScreen(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        Text(text = "Log In")
         OutlinedTextField(
             value = viewModel.username,
             label = { Text(text = "Username") },
@@ -40,19 +38,13 @@ fun LoginScreen(
             onValueChange = viewModel::updatePassword
         )
         if (viewModel.error.isNotEmpty()) {
-            Text(
-                text = viewModel.error,
-                style = MaterialTheme.typography.labelSmall,
-                color = ColorError
-            )
+            ErrorText(text = viewModel.error)
         }
-        Row(modifier = Modifier.padding(top = MarginMedium)) {
-            Button(onClick = viewModel::login) {
-                Text(text = "Login")
-            }
-            Button(onClick = onSignupClick) {
-                Text(text = "Sign Up")
-            }
+        Button(onClick = viewModel::login) {
+            Text(text = "Login")
+        }
+        OutlinedButton(onClick = onSignupClick) {
+            Text(text = "Sign Up")
         }
     }
 }
