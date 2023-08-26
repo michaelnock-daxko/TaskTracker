@@ -5,13 +5,13 @@ package mi.xi.timer.ui.screens.signup.screens
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.OutlinedButton
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.hilt.navigation.compose.hiltViewModel
 import mi.xi.timer.ui.components.CenterColumn
 import mi.xi.timer.ui.components.ErrorText
+import mi.xi.timer.ui.components.OneLineTextField
 
 @Composable
 fun SignupMainScreen(
@@ -26,12 +26,10 @@ fun SignupMainScreen(
     }
     CenterColumn {
         Text(text = "Sign Up")
-        OutlinedTextField(
+        OneLineTextField(
             value = viewModel.username,
-            label = { Text(text = "Username") },
-            onValueChange = viewModel::updateUsername,
-            maxLines = 1,
-            singleLine = true
+            label = "Username",
+            onValueChange = viewModel::updateUsername
         )
         if (viewModel.error.isNotEmpty()) {
             ErrorText(text = viewModel.error)

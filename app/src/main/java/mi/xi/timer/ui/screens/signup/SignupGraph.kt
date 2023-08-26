@@ -17,12 +17,23 @@ fun NavGraphBuilder.signupGraph(navController: NavController) {
     ) {
         composable(SignupMain.route) {
             SignupMainScreen(
-                onUsernameCreated = { navController.navigate(SignupPassword.route) },
+                onUsernameCreated = {
+                    val route = SignupPassword.route(it)
+                    navController.navigate(route)
+                },
                 onLoginClicked = { navController.navigateTop(LoginScreen.route) }
             )
         }
-        composable(SignupPassword.route) {
-            SignupPasswordScreen()
+        composable(
+            route = SignupPassword.route,
+            arguments = SignupPassword.arguments
+        ) {
+            val username = it.arguments?.getString(SignupPassword.username)
+            if (username == null) {
+                navController.popBackStack()
+            } else {
+                SignupPasswordScreen(username)
+            }
         }
     }
 }
