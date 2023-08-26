@@ -33,6 +33,22 @@ class UserManager @Inject constructor(
         }
     }
 
+    suspend fun signUp(username: String, password: String): TimerResult<Unit> {
+        val users = getUsers().toMutableList()
+        if (users.any { it.username == username }) return TimerResult.Failure("Username taken")
+        val newUser = TimerUser(username, password.hashCode().toString())
+        users.add(newUser)
+        dataManager.setObject("users", users)
+        dataManager.setString("user", username)
+        _currentUser.value = newUser
+        return TimerResult.Success(Unit)
+    }
+
+    suspend fun logOut() {
+        dataManager.setString("user", null)
+        _currentUser.value = null
+    }
+
     // region Helper functions ---------------------------------------------------------------------
     private suspend fun getUsers(): List<TimerUser> {
         return dataManager.getObject("users") ?: emptyList()

@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import mi.xi.timer.data.TimerResult
 import mi.xi.timer.data.UserManager
 import javax.inject.Inject
 
@@ -15,7 +16,8 @@ import javax.inject.Inject
 class SignupPasswordViewModel @Inject constructor(
     private val userManager: UserManager
 ) : ViewModel() {
-    val specialCharacters = ".,#@$!?"
+    private val specialCharacters = ".,#@$!?"
+
     var password by mutableStateOf("")
     var errors = mutableStateListOf<String>()
 
@@ -27,7 +29,14 @@ class SignupPasswordViewModel @Inject constructor(
         val errorMsgs = checkPasswordErrors()
         if (errorMsgs.isEmpty()) {
             viewModelScope.launch {
-                // TODO: Create user and log them in
+                val result = userManager.signUp(username, password)
+                when(result) {
+                    is TimerResult.Failure -> {
+                        errors.clear()
+                        errors.add(result.error)
+                    }
+                    else -> Unit
+                }
             }
         } else {
             errors.clear()

@@ -21,8 +21,11 @@ class DataManager @Inject constructor(
     suspend fun getString(key: String): String? =
         get { preferences -> preferences[stringPreferencesKey(key)] }
 
-    suspend fun setString(key: String, value: String) {
-        set { preferences -> preferences[stringPreferencesKey(key)] = value }
+    suspend fun setString(key: String, value: String?) {
+        set { preferences ->
+            if (value == null) preferences.remove(stringPreferencesKey(key))
+            else preferences[stringPreferencesKey(key)] = value
+        }
     }
 
     suspend inline fun <reified T> getObject(key: String): T? {

@@ -20,6 +20,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import mi.xi.timer.data.UserManager
 import mi.xi.timer.ui.screens.HomeScreen
 import mi.xi.timer.ui.screens.LoginScreen
+import mi.xi.timer.ui.screens.home.homeGraph
 import mi.xi.timer.ui.screens.login.loginGraph
 import mi.xi.timer.ui.screens.signup.signupGraph
 import mi.xi.timer.ui.theme.TimerTheme
@@ -59,6 +60,7 @@ fun MainNavHost(
     NavHost(navController = navController, startDestination = start) {
         loginGraph(navController = navController)
         signupGraph(navController = navController)
+        homeGraph(navController = navController)
     }
 }
 

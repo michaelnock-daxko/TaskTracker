@@ -25,7 +25,7 @@ fun SignupPasswordScreen(
         )
         OneLineTextField(
             value = viewModel.password,
-            label = "Username",
+            label = "Password",
             onValueChange = viewModel::updatePassword
         )
         if (viewModel.errors.isNotEmpty()) {
@@ -34,7 +34,7 @@ fun SignupPasswordScreen(
         Button(onClick = {
             viewModel.checkPassword(username)
         }) {
-            Text(text = "Login")
+            Text(text = "Create Account")
         }
     }
 }
