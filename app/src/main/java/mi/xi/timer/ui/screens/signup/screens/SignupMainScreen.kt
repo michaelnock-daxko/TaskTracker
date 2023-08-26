@@ -2,9 +2,6 @@
 
 package mi.xi.timer.ui.screens.signup.screens
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.OutlinedButton
@@ -12,9 +9,8 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
+import mi.xi.timer.ui.components.CenterColumn
 import mi.xi.timer.ui.components.ErrorText
 
 @Composable
@@ -28,11 +24,7 @@ fun SignupMainScreen(
             if (isReady) onUsernameCreated(viewModel.username)
         }
     }
-    Column(
-        modifier = Modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
+    CenterColumn {
         Text(text = "Sign Up")
         OutlinedTextField(
             value = viewModel.username,
