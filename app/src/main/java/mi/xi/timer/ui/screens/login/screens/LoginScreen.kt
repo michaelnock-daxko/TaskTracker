@@ -7,6 +7,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.hilt.navigation.compose.hiltViewModel
 import mi.xi.timer.ui.components.CenterColumn
 import mi.xi.timer.ui.components.ErrorText
@@ -27,7 +28,8 @@ fun LoginScreen(
         OneLineTextField(
             value = viewModel.password,
             label = "Password",
-            onValueChange = viewModel::updatePassword
+            onValueChange = viewModel::updatePassword,
+            keyboardType = KeyboardType.Password
         )
         if (viewModel.error.isNotEmpty()) {
             ErrorText(text = viewModel.error)

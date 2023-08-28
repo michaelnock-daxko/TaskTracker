@@ -5,6 +5,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.hilt.navigation.compose.hiltViewModel
 import mi.xi.timer.ui.components.CenterColumn
@@ -26,7 +27,8 @@ fun SignupPasswordScreen(
         OneLineTextField(
             value = viewModel.password,
             label = "Password",
-            onValueChange = viewModel::updatePassword
+            onValueChange = viewModel::updatePassword,
+            keyboardType = KeyboardType.Password
         )
         if (viewModel.errors.isNotEmpty()) {
             viewModel.errors.forEach { ErrorText(text = it) }
