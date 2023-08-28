@@ -1,4 +1,4 @@
-package mi.xi.timer.ui.screens.home.screens
+package mi.xi.timer.ui.screens.home.screens.home
 
 import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.ViewModel

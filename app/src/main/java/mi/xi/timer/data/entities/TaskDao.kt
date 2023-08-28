@@ -9,6 +9,9 @@ interface TaskDao {
     @Query("SELECT * FROM task WHERE username=:username")
     suspend fun getAllFromUser(username: String?): List<Task>
 
+    @Query("SELECT * FROM task WHERE id=:taskId LIMIT 1")
+    suspend fun getTask(taskId: Long): Task?
+
     @Insert
     suspend fun insert(task: Task): Long
 }

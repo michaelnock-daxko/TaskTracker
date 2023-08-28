@@ -10,6 +10,11 @@ class TaskRepository @Inject constructor(
     private val userManager: UserManager
 ) {
     suspend fun fetchAll() = taskDao.getAllFromUser(userManager.currentUser.value?.username)
+
+    suspend fun fetchTask(taskId: Long): Task? {
+        return taskDao.getTask(taskId)
+    }
+
     suspend fun createTask(name: String): Task? {
         val username = userManager.currentUser.value?.username ?: return null
         val task = Task(name = name, username = username)
