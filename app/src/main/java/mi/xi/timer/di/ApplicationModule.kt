@@ -27,5 +27,5 @@ object ApplicationModule {
     fun database(@ApplicationContext context: Context): TimerDatabase = Room.databaseBuilder(
         context,
         TimerDatabase::class.java, "timer-database"
-    ).build()
+    ).fallbackToDestructiveMigration().build()
 }

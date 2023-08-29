@@ -18,3 +18,14 @@ object TaskDetail : Screen {
     override val route = "$routeName/{$task_id}"
     fun route(taskId: Long) = "$routeName/$taskId"
 }
+
+object TaskTrack : Screen {
+    private const val routeName = "task_track"
+
+    // arguments
+    const val task_id = "task_id"
+    val arguments = listOf(navArgument(task_id) { type = NavType.LongType })
+
+    override val route = "$routeName/{$task_id}"
+    fun route(taskId: Long) = "$routeName/$taskId"
+}
