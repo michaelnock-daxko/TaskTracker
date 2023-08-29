@@ -26,7 +26,7 @@ fun NavGraphBuilder.homeGraph(navController: NavController) {
             if (taskId == null) {
                 navController.popBackStack()
             } else {
-                TaskDetailScreen(taskId = taskId)
+                TaskDetailScreen(taskId = taskId, onBackPressed = { navController.popBackStack() })
             }
         }
     }
