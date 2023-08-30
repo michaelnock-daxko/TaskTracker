@@ -1,9 +1,14 @@
+@file:OptIn(ExperimentalAnimationApi::class)
+
 package mi.xi.timer.ui.screens.signup
 
+import androidx.compose.animation.AnimatedContentScope
+import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.core.tween
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
-import androidx.navigation.compose.composable
-import androidx.navigation.navigation
+import com.google.accompanist.navigation.animation.composable
+import com.google.accompanist.navigation.animation.navigation
 import mi.xi.timer.ui.screens.LoginScreen
 import mi.xi.timer.ui.screens.SignupScreen
 import mi.xi.timer.ui.screens.signup.screens.SignupMainScreen
@@ -15,7 +20,14 @@ fun NavGraphBuilder.signupGraph(navController: NavController) {
         route = SignupScreen.route,
         startDestination = SignupMain.route
     ) {
-        composable(SignupMain.route) {
+        composable(SignupMain.route,
+            enterTransition = {
+                slideIntoContainer(
+                    AnimatedContentScope.SlideDirection.Left,
+                    animationSpec = tween(700)
+                )
+            }
+        ) {
             SignupMainScreen(
                 onUsernameCreated = {
                     val route = SignupPassword.route(it)
