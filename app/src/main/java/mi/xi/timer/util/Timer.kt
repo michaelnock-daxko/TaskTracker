@@ -24,8 +24,10 @@ class Timer @Inject constructor(private val timeManager: TimeManager) {
     }
 
     fun pause() {
-        _isPaused.value = true
-        elapsedMs += timeManager.currentTimeMs() - startTimeMs
+        if (!_isPaused.value) {
+            _isPaused.value = true
+            elapsedMs += timeManager.currentTimeMs() - startTimeMs
+        }
     }
 }
 

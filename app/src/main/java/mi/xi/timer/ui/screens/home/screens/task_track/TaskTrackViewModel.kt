@@ -34,6 +34,7 @@ class TaskTrackViewModel @Inject constructor(
 
     fun pauseTimer() {
         timer.pause()
+        elapsedMillis = timer.elapsedTimeMs
     }
 
     fun togglePause() {

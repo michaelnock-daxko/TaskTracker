@@ -23,6 +23,7 @@ class TaskDetailViewModel @Inject constructor(
     fun fetchTask(taskId: Long) {
         viewModelScope.launch {
             task = taskRepository.fetchTask(taskId)
+            taskEvents.clear()
             taskEvents.addAll(taskRepository.fetchEvents(taskId))
         }
     }
