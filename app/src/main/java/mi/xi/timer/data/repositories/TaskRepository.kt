@@ -21,9 +21,11 @@ class TaskRepository @Inject constructor(
     }
 
     suspend fun fetchEvents(taskId: Long): List<TaskEvent> = taskEventDao.getAllForTask(taskId)
+    suspend fun deleteEvent(event: TaskEvent) = taskEventDao.delete(event)
 
     suspend fun createTaskEvent(taskId: Long, millis: Long) {
-        val taskEvent = TaskEvent(taskId = taskId, millis = millis, creationDate = timeManager.currentTimeMs())
+        val taskEvent =
+            TaskEvent(taskId = taskId, millis = millis, creationDate = timeManager.currentTimeMs())
         taskEventDao.insert(taskEvent)
     }
 

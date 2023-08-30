@@ -20,6 +20,13 @@ class TaskDetailViewModel @Inject constructor(
     var task by mutableStateOf<Task?>(null)
     var taskEvents = mutableStateListOf<TaskEvent>()
 
+    fun deleteTaskEvent(event: TaskEvent) {
+        viewModelScope.launch {
+            taskRepository.deleteEvent(event)
+            taskEvents.remove(event)
+        }
+    }
+
     fun fetchTask(taskId: Long) {
         viewModelScope.launch {
             task = taskRepository.fetchTask(taskId)

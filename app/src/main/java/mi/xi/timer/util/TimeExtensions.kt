@@ -24,10 +24,11 @@ fun Long.timeMillis(): Long {
 fun Long.zeroPadded() = "$this".padStart(2, '0').take(2)
 
 fun Long.toTimeString(): String {
-    val h = timeHours()
-    val hours = if (h > 0)"${timeHours()}:" else ""
-    val minutes = timeMinutes().zeroPadded()
-    val seconds = timeSeconds().zeroPadded()
-    val millis = timeMillis().zeroPadded()
-    return "$hours$minutes:$seconds:$millis"
+    val roundedMillis = this + 500
+
+    val h = roundedMillis.timeHours()
+    val hours = if (h > 0)"${h}h " else ""
+    val minutes = roundedMillis.timeMinutes().zeroPadded()
+    val seconds = roundedMillis.timeSeconds().zeroPadded()
+    return "$hours${minutes}m ${seconds}s"
 }

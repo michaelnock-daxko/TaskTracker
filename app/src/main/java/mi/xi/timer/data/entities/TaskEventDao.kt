@@ -1,6 +1,7 @@
 package mi.xi.timer.data.entities
 
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 
@@ -14,4 +15,7 @@ interface TaskEventDao {
 
     @Insert
     suspend fun insert(taskEvent: TaskEvent): Long
+
+    @Delete
+    suspend fun delete(taskEvent: TaskEvent)
 }
