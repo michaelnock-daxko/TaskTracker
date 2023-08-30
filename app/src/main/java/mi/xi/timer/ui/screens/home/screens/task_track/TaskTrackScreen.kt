@@ -1,11 +1,18 @@
 package mi.xi.timer.ui.screens.home.screens.task_track
 
 import androidx.annotation.StringRes
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.tween
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
@@ -20,8 +27,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import mi.xi.timer.R
 import mi.xi.timer.ui.components.TimerScaffold
@@ -60,6 +70,7 @@ fun TaskTrackScreen(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Timer(millis = viewModel.elapsedMillis)
+                TimerAnimation(millis = viewModel.elapsedMillis, isEnabled = isPaused)
                 PauseButton(isPaused = isPaused, onClick = viewModel::togglePause)
                 SaveButton(onClick = {
                     viewModel.pauseTimer()
@@ -78,6 +89,56 @@ fun TaskTrackScreen(
             onCancel = { isConfirmDialogOpen = false }) {
 
         }
+    }
+}
+
+@Composable
+fun TimerAnimation(millis: Long, isEnabled: Boolean) {
+    val minutes by animateFloatAsState(
+        targetValue = (millis.timeMinutes()+ 1) / 60f,
+        animationSpec = tween(durationMillis = 60_000, easing = LinearEasing),
+        label = "color_state"
+    )
+    val seconds by animateFloatAsState(
+        targetValue = (millis.timeSeconds() + 1) / 60f,
+        animationSpec = tween(durationMillis = 1000, easing = LinearEasing),
+        label = "color_state"
+    )
+    val milliseconds = millis.timeMillis() / 1000f
+    val alpha by animateFloatAsState(
+        targetValue = if (isEnabled) 0.2f else 1f,
+        animationSpec = tween(durationMillis = 200, easing = LinearEasing),
+        label = "color_state"
+    )
+
+    Row {
+        val modifier = Modifier
+            .weight(1f)
+            .alpha(alpha)
+        CircleProgress(progress = minutes, modifier = modifier, label = "h")
+        CircleProgress(progress = seconds, modifier = modifier, label = "m")
+        CircleProgress(progress = milliseconds, modifier = modifier, label = "s")
+    }
+}
+
+@Composable
+fun CircleProgress(modifier: Modifier, progress: Float, label: String) {
+    Box(
+        modifier = modifier
+            .padding(all = MarginMedium)
+            .aspectRatio(1f)
+            .clip(CircleShape)
+            .background(Color.Gray),
+        contentAlignment = Alignment.Center
+    ) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize(progress)
+                .aspectRatio(1f)
+                .clip(CircleShape)
+                .background(Color.DarkGray)
+        )
+        Text(text = label.uppercase(), fontSize = 20.sp, color = Color.White)
     }
 }
 
@@ -129,18 +190,20 @@ fun SaveButton(onClick: () -> Unit) {
 @Composable
 fun Timer(millis: Long) {
     val hours = millis.timeHours()
-    Row(modifier = Modifier.padding(MarginMedium)) {
-        if (hours > 0) TimerText(number = hours, width = 100)
+    Row(modifier = Modifier.padding(MarginMedium), verticalAlignment = Alignment.CenterVertically) {
+        if (hours > 0) TimerText(number = hours)
         TimerText(number = millis.timeMinutes())
-        TimerText(number = millis.timeSeconds())
-        TimerText(number = millis.timeMillis(), width = 2)
+        TimerText(number = millis.timeSeconds(), suffix = "")
+        TimerText(number = millis.timeMillis(), fontSize = 20, suffix = "")
     }
 }
 
 @Composable
-fun TimerText(number: Long, width: Int = 3) {
+fun TimerText(number: Long, fontSize: Int = 35, suffix: String = ":") {
+    val zeroPadded = "$number".padStart(2, '0').take(2)
     Text(
-        text = "$number:".padStart(3, '0').take(width),
-        style = MaterialTheme.typography.headlineLarge
+        text = "$zeroPadded$suffix",
+        style = MaterialTheme.typography.headlineLarge,
+        fontSize = fontSize.sp
     )
 }
