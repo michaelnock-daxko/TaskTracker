@@ -12,4 +12,6 @@
     <string name="button_ok">Ok</string>
     <string name="button_cancel">Cancel</string>
     <string name="finish_entry">Finish entry?</string>
+    <string name="confirm_deletion">Confirm deletion</string>
+    <string name="confirm_event_deletion">Are you sure you want to delete this event?</string>
 </resources>

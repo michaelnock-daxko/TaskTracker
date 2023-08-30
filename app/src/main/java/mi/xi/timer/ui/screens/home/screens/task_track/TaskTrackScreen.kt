@@ -172,7 +172,9 @@ fun TimerDialog(
                 Text(text = stringResource(R.string.button_cancel))
             }
         },
-        onDismissRequest = { onCancel() }
+        onDismissRequest = { onCancel() },
+        textContentColor = Color.DarkGray,
+        titleContentColor = Color.Black
     )
 }
 
