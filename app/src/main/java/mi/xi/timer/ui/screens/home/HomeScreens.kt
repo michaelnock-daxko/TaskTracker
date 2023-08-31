@@ -8,6 +8,10 @@ object HomeMain : Screen {
     override val route = "home_main"
 }
 
+object TaskCreate : Screen {
+    override val route = "task_create"
+}
+
 object TaskDetail : Screen {
     private const val routeName = "task_detail"
 
