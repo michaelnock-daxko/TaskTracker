@@ -150,7 +150,7 @@ fun TimerDialog(
     contents: @Composable ColumnScope.() -> Unit
 ) {
     AlertDialog(
-        containerColor = Color.White,
+        containerColor = MaterialTheme.colorScheme.primaryContainer,
         title = {
             Text(
                 text = stringResource(id = titleResource),

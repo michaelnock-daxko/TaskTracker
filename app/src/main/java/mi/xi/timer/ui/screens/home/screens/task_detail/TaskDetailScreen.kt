@@ -91,7 +91,7 @@ fun TaskEvent(taskEvent: TaskEvent, onDeleteEvent: (TaskEvent) -> Unit) {
         }
         Spacer(modifier = Modifier.weight(1f))
         Button(onClick = { onDeleteEvent(taskEvent) }) {
-            Text(text = "Delete")
+            Text(text = stringResource(R.string.delete))
         }
     }
 }

@@ -23,10 +23,21 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun addTask() {
+    fun updateTask(task: Task) {
         viewModelScope.launch {
-            val task = taskRepository.createTask("task ${tasks.size}")
-            if (task != null) tasks.add(task)
+            taskRepository.updateTask(task)
+            val index = tasks.indexOfFirst { it.id == task.id }
+            if (index >= 0) {
+                tasks.removeAt(index)
+                tasks.add(index, task)
+            }
+        }
+    }
+
+    fun deleteTask(task: Task) {
+        viewModelScope.launch {
+            taskRepository.deleteTask(task)
+            tasks.remove(task)
         }
     }
 

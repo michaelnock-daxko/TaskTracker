@@ -16,9 +16,9 @@ class TaskRepository @Inject constructor(
 ) {
     suspend fun fetchAll() = taskDao.getAllFromUser(userManager.currentUser.value?.username)
 
-    suspend fun fetchTask(taskId: Long): Task? {
-        return taskDao.getTask(taskId)
-    }
+    suspend fun fetchTask(taskId: Long): Task? = taskDao.getTask(taskId)
+    suspend fun updateTask(task: Task) = taskDao.update(task)
+    suspend fun deleteTask(task: Task) = taskDao.delete(task)
 
     suspend fun fetchEvents(taskId: Long): List<TaskEvent> = taskEventDao.getAllForTask(taskId)
     suspend fun deleteEvent(event: TaskEvent) = taskEventDao.delete(event)
