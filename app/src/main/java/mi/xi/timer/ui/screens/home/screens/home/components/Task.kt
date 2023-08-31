@@ -13,6 +13,6 @@ import mi.xi.timer.ui.theme.MarginMedium
 @Composable
 fun Task(task: Task, onClicked: (Task) -> Unit) {
     Row(modifier = Modifier.fillMaxWidth().clickable { onClicked(task) }.padding(all = MarginMedium)) {
-        Text(text = "${task.id} - ${task.name}")
+        Text(text = task.name)
     }
 }
