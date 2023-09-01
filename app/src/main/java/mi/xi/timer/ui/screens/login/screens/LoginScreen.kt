@@ -7,8 +7,10 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.hilt.navigation.compose.hiltViewModel
+import mi.xi.timer.R
 import mi.xi.timer.ui.components.CenterColumn
 import mi.xi.timer.ui.components.ErrorText
 import mi.xi.timer.ui.components.OneLineTextField
@@ -22,12 +24,12 @@ fun LoginScreen(
         Text(text = "Log In")
         OneLineTextField(
             value = viewModel.username,
-            label = "Username",
+            label = stringResource(R.string.username),
             onValueChange = viewModel::updateUsername
         )
         OneLineTextField(
             value = viewModel.password,
-            label = "Password",
+            label = stringResource(R.string.password),
             onValueChange = viewModel::updatePassword,
             keyboardType = KeyboardType.Password
         )
@@ -35,10 +37,10 @@ fun LoginScreen(
             ErrorText(text = viewModel.error)
         }
         Button(onClick = viewModel::login) {
-            Text(text = "Login")
+            Text(text = stringResource(R.string.login))
         }
         OutlinedButton(onClick = onSignupClick) {
-            Text(text = "Sign Up")
+            Text(text = stringResource(R.string.sign_up))
         }
     }
 }
