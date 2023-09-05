@@ -21,7 +21,7 @@ fun LoginScreen(
     onSignupClick: () -> Unit
 ) {
     CenterColumn {
-        Text(text = "Log In")
+        Text(text = stringResource(R.string.log_in))
         OneLineTextField(
             value = viewModel.username,
             label = stringResource(R.string.username),
